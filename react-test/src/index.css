@@ -3,3 +3,35 @@
 .input {
     @apply w-full px-3 py-1 border border-gray-200 rounded-full outline-none shadow-xs
 }
+
+@media print {
+    @page {
+        size: A4;
+        margin: 12mm;
+    }
+    .no-print {
+        display: none !important;
+    }
+    body {
+        margin: 0;
+        background: white;
+    }
+    main {
+        display: block !important;
+        margin: 0 !important;
+    }
+    .cv-preview-section {
+        display: block !important;
+        width: 100% !important;
+        border:  none !important;
+        padding: 0 !important;
+    }
+    .cv-preview-document {
+        width: 100% !important;
+        max-width: none !important;
+        box-shadow: none !important;
+        background: white;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+}

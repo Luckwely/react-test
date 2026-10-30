@@ -64,7 +64,6 @@ export default function PersonalInfoForm() {
         <label>Your summary*</label>
         <textarea
           {...register("summary")}
-          name="" id=""
           className="input" />
         {errors.summary && <p role="alert" className="text-red-500">{errors.summary.message}</p>}
       </div>

@@ -33,7 +33,7 @@ export default function ExperienceForm({number}:Props) {
       </div>
       <div>
         <label>Description*</label>
-        <textarea {...register("description")} name="" id="" className="input" />
+        <textarea {...register("description")} className="input" />
         {errors.description && <p role="alert" className="text-red-500">{errors.description.message}</p>}
       </div>
     </div>

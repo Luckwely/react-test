@@ -11,7 +11,8 @@ export const experienceSchema = z.object({
         startDate: z.string().nonempty("required"),
         endDate: z.string().nonempty("required"),
         description: z.string()
-                .nonempty("The description is required")
+                .trim()
+                .min(1,"The description is required")
                 .min(2, "At least 2 character")
 })
 

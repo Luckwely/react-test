@@ -27,8 +27,9 @@ export const personalInfoSchema = z.object({
             .min(2, "At least 2 character")
             .max(255, "Miximum of 255 character"),
     summary: z.string()
-        .nonempty("The summary is required")
-        .min(2, "At least 2 character")               
+        .trim()
+        .min(1,"The summary is required")
+        .min(2, "At least 2 character")
 })
 
 export type personalInfoSchemType = z.infer<typeof personalInfoSchema>

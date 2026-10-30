@@ -1,5 +1,5 @@
-import { FaSave } from "react-icons/fa";
-import ExportButton from "./exportButton";
+import { FaSave } from "react-icons/fa"
+
 
 export default function Header() {
   return (
@@ -28,7 +28,9 @@ export default function Header() {
           </div>
 
           <div className="">
-            <ExportButton><FaSave /> Export</ExportButton>
+            <button type="button" onClick={()=>{window.print()}} className="no-print bg-green-600 text-white px-3 py-2 m-4 rounded-2xl flex items-center gap-1">
+           <FaSave /> Print / Save as Pdf
+          </button>
           </div>
         </div>
       </nav>

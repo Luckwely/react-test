@@ -1,8 +1,10 @@
+import { FaSave } from "react-icons/fa";
+import ExportButton from "./exportButton";
 
 export default function Header() {
   return (
     <>
-      <nav className="w-full">
+      <nav className="w-full fixed top-0 left-0 z-100">
         <div className="bg-black/90 backdrop-blur-sm border border-white/10 shadow-2xl shadow-black/50 px-2 py-1 flex items-center justify-between transition-all duration-300 hover:border-white/20">
 
           <div className="flex items-center gap-3">
@@ -25,16 +27,12 @@ export default function Header() {
             </div>
           </div>
 
-
-          <div className="w-9 h-9"></div>
+          <div className="">
+            <ExportButton><FaSave /> Export</ExportButton>
+          </div>
         </div>
-
-        <div className="h-px w-3/4 mx-auto mt-2 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
       </nav>
 
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 text-white/20 text-xs tracking-widest pointer-events-none select-none">
-        ONLY LOGO • PURE BLACK • CV GENERATOR
-      </div>
     </>
   )
 }

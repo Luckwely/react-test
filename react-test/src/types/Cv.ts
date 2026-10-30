@@ -1,4 +1,5 @@
 export interface PersonalInfo {
+    photo: File;
     fullName: string;
     title: string;
     email: string;
@@ -29,4 +30,6 @@ export interface CvData {
     education: Education[];
     experience: Experience[];
     skills: string;
+    languages: string;
+    hobbies: string;
 }

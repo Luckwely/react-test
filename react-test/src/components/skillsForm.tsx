@@ -1,24 +1,19 @@
-import Title from "./ui/title"
+import { useFormContext } from "react-hook-form"
+import SubTitle from "./ui/subTitle"
+import type { skillsSchemType } from "../schema/skills.schema"
 
-export default function SkillsForm() {
+type Props = {
+  number: number
+}
+
+export default function SkillsForm({number}: Props) {
+  const { register, formState: { errors } } = useFormContext<skillsSchemType>()
   return (
     <div>
-      <Title>Your skills</Title>
+      <SubTitle>Item {number}</SubTitle>
       <div>
-        <label>Your hobbies*</label>
-        <input type="text" placeholder="Ex: playing guitar" className="input" />
-      </div>
-      <div>
-        <label>Your mother tongue*</label>
-        <input type="text" placeholder="Ex: French" className="input" />
-      </div>
-      <div>
-        <label>Your second language*</label>
-        <input type="text" placeholder="Ex: English" className="input" />
-      </div>
-      <div>
-        <label>Your third language*</label>
-        <input type="text" placeholder="Ex: Italian" className="input" />
+        <input {...register("skills")} type="text" placeholder="Ex: photoshop, excel" className="input" />
+        {errors.skills && <p role="alert" className="text-red-500">{errors.skills.message}</p>}
       </div>
     </div>
   )

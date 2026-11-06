@@ -15,35 +15,35 @@ import { useForm, FormProvider, useWatch, useFieldArray, type SubmitHandler } fr
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cvSchema, type CvFormType } from "./schema/cv.schema";
 
-  const STORAGE_KEY= "easycv-draft";
-  function loadDraft(): Partial<CvFormType> {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return {};
+const STORAGE_KEY = "easycv-draft";
+function loadDraft(): Partial<CvFormType> {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return {};
 
-      const draft = JSON.parse(saved);
-      if (draft.languages && !Array.isArray(draft.languages)) {
-        draft.languages = draft.languages.trim() ? [draft.languages] : [''];
-      }
-      if (draft.educations && !Array.isArray(draft.educations)) {
-        draft.educations = [draft.educations];
-      }
-      return draft;
-    } catch {
-      return {};
+    const draft = JSON.parse(saved);
+    if (draft.languages && !Array.isArray(draft.languages)) {
+      draft.languages = draft.languages.trim() ? [draft.languages] : [''];
     }
-  }
-  function loadIds(section: string): string[] {
-    try {
-      const saved = localStorage.getItem(
-        `easycv-${section}`
-      );
-      const ids = saved ? JSON.parse(saved): [];
-      return Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : [];
-    } catch {
-      return [];
+    if (draft.educations && !Array.isArray(draft.educations)) {
+      draft.educations = [draft.educations];
     }
+    return draft;
+  } catch {
+    return {};
   }
+}
+function loadIds(section: string): string[] {
+  try {
+    const saved = localStorage.getItem(
+      `easycv-${section}`
+    );
+    const ids = saved ? JSON.parse(saved) : [];
+    return Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : [];
+  } catch {
+    return [];
+  }
+}
 
 export default function App() {
 
@@ -67,17 +67,17 @@ export default function App() {
         description: '',
       }],
 
-      educations: [{ 
-        school: '', 
-        degree: '', 
-        startYear: '', 
-        endYear: '' 
+      educations: [{
+        school: '',
+        degree: '',
+        startYear: '',
+        endYear: ''
       }],
 
 
-      hobbies: [{name: ''}],
-      languages: [{name: ''}],
-      skills: [{name: ''}],
+      hobbies: [{ name: '' }],
+      languages: [{ name: '' }],
+      skills: [{ name: '' }],
 
       ...loadDraft(),
       photo: undefined,
@@ -93,7 +93,7 @@ export default function App() {
   const cvValues = useWatch({
     control: methods.control,
   });
-const {subscribe} = methods;
+  const { subscribe } = methods;
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -133,40 +133,40 @@ const {subscribe} = methods;
   }, [subscribe]);
 
 
-useEffect(() => {
-  try {
-    localStorage.setItem(
-      "easycv-experiences",
-      JSON.stringify(experienceFields)
-    );
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "easycv-experiences",
+        JSON.stringify(experienceFields)
+      );
 
 
-    localStorage.setItem(
-      "easycv-skills",
-      JSON.stringify(skillsFields)
-    );
+      localStorage.setItem(
+        "easycv-skills",
+        JSON.stringify(skillsFields)
+      );
 
 
-    localStorage.setItem(
-      "easycv-languages",
-      JSON.stringify(languagesFields)
-    );
-    localStorage.setItem(
-      "easycv-hobbies",
-      JSON.stringify(hobbiesFields)
-    );
-  } catch (error) {
-    console.error("Saving sections failed:", error);
-  }
-}, [
-  experienceFields,
-  skillsFields,
-  languagesFields,
-  hobbiesFields,
-]);
+      localStorage.setItem(
+        "easycv-languages",
+        JSON.stringify(languagesFields)
+      );
+      localStorage.setItem(
+        "easycv-hobbies",
+        JSON.stringify(hobbiesFields)
+      );
+    } catch (error) {
+      console.error("Saving sections failed:", error);
+    }
+  }, [
+    experienceFields,
+    skillsFields,
+    languagesFields,
+    hobbiesFields,
+  ]);
 
   const submit: SubmitHandler<CvFormType> = (data) => {
-    console.log("cv validated successfully",data);
+    console.log("cv validated successfully", data);
     alert("cv validated");
   }
   const onInvalid = (errors: object) => {
@@ -184,29 +184,40 @@ useEffect(() => {
               <div className="mb-5">
                 <PersonalInfoForm />
               </div>
+
+
               <div className="mb-5">
                 <Title>Experience</Title>
-                <ExperienceForm number={1} />
+
                 {experienceFields.fields.map((field, index) => (
                   <div key={field.id}>
-                    <ExperienceForm number={index + 2} />
+                    <ExperienceForm number={index + 1} />
+
                     {index > 0 && (
-                      <ButtonRemove onClick={() => experienceFields.remove(index)}>
+                      <ButtonRemove
+                        onClick={() => experienceFields.remove(index)}
+                      >
                         <FaTrash /> Remove
                       </ButtonRemove>
                     )}
                   </div>
                 ))}
-                <ButtonAddMore onClick={() => experienceFields.append({
-                  company: "",
-                  role: "",
-                  startDate: "",
-                  endDate: "",
-                  description: ""
-                })}>
+
+                <ButtonAddMore
+                  onClick={() =>
+                    experienceFields.append({
+                      company: "",
+                      role: "",
+                      startDate: "",
+                      endDate: "",
+                      description: "",
+                    })
+                  }
+                >
                   <FaPlus /> Add More Experience
                 </ButtonAddMore>
               </div>
+
 
               <div className="mb-5">
                 <Title>Education</Title>
@@ -227,62 +238,79 @@ useEffect(() => {
                 </ButtonAddMore>
               </div>
 
-              <div className="mb-5">
-                <Title>Skill</Title>
-                <SkillsForm number={1} />
-                {skills.map((id, index) => (
-                  <div key={id}>
-                    <SkillsForm number={index + 2} />
-                    <ButtonRemove onClick={() => setSkills(old => old.filter(item => item !== id))}>
-                      <FaTrash /> Remove
-                    </ButtonRemove>
-                  </div>
-                ))}
-                <ButtonAddMore onClick={() => setSkills(old => [...old, crypto.randomUUID()])}>
-                  <FaPlus /> Add More Skill
-                </ButtonAddMore>
-              </div>
 
               <div className="mb-5">
-                <Title>Language</Title>
-                {languages.map((id, index) => (
-                  <div key={id}>
-                    <Language number={index + 1} />
+                <Title>Skill</Title>
+
+                {skillsFields.fields.map((field, index) => (
+                  <div key={field.id}>
+                    <SkillsForm number={index + 1} />
+
                     {index > 0 && (
-                      <ButtonRemove onClick={() => {
-                        setLanguages(old => old.filter(item => item !== id));
-                        methods.setValue("languages", methods.getValues("languages")?.filter((_, itemIndex) => itemIndex !== index));
-                      }}>
+                      <ButtonRemove
+                        onClick={() => skillsFields.remove(index)}
+                      >
                         <FaTrash /> Remove
                       </ButtonRemove>
                     )}
                   </div>
                 ))}
-                <ButtonAddMore onClick={() => {
-                  setLanguages(old => [...old, crypto.randomUUID()]);
-                  methods.setValue("languages", [...(methods.getValues("languages") ?? []), '']);
-                }}>
+
+                <ButtonAddMore
+                  onClick={() => skillsFields.append({ name: "" })}
+                >
+                  <FaPlus /> Add More Skill
+                </ButtonAddMore>
+              </div>
+
+
+              <div className="mb-5">
+                <Title>Language</Title>
+                {languagesFields.fields.map((field, index) => (
+                  <div key={field.id}>
+                    <Language number={index + 1} />
+
+                    {index > 0 && (
+                      <ButtonRemove
+                        onClick={() => languagesFields.remove(index)}
+                      >
+                        <FaTrash /> Remove
+                      </ButtonRemove>
+                    )}
+                  </div>
+                ))}
+                <ButtonAddMore
+                  onClick={() => languagesFields.append({ name: "" })}
+                >
                   <FaPlus /> Add More Language
                 </ButtonAddMore>
               </div>
 
               <div className="mb-5">
                 <Title>Hobbies</Title>
-                <Hobbies number={1} />
-                {hobbies.map((id, index) => (
-                  <div key={id}>
-                    <Hobbies number={index + 2} />
-                    <ButtonRemove onClick={() => setHobbies(old => old.filter(item => item !== id))}>
-                      <FaTrash /> Remove
-                    </ButtonRemove>
+                {hobbiesFields.fields.map((field, index) => (
+                  <div key={field.id}>
+                    <Hobbies number={index + 1} />
+
+                    {index > 0 && (
+                      <ButtonRemove
+                        onClick={() => hobbiesFields.remove(index)}
+                      >
+                        <FaTrash /> Remove
+                      </ButtonRemove>
+                    )}
                   </div>
                 ))}
-                <ButtonAddMore onClick={() => setHobbies(old => [...old, crypto.randomUUID()])}>
-                  <FaPlus /> Add More Hobbie
+
+                <ButtonAddMore
+                  onClick={() => hobbiesFields.append({ name: "" })}
+                >
+                  <FaPlus /> Add More Hobby
                 </ButtonAddMore>
               </div>
-              <button type="button" onClick={()=> {
-                console.log('current cv values:',methods.getValues());
+
+              <button type="button" onClick={() => {
+                console.log('current cv values:', methods.getValues());
               }}>Check form values</button>
               <button type="submit">ok</button>
             </form>

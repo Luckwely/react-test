@@ -8,8 +8,9 @@ type Props = {
 
 export default function ExperienceForm({number}:Props) {
   const index = number - 1;
-  register(`experiences.${index}.company`);
-  const { register, formState: { errors } } = useFormContext<experienceSchemType>()
+
+  const { register, formState: { errors } } = useFormContext<experienceSchemType>();
+
   return (
     <div>
       <SubTitle>Item ({number})</SubTitle>
@@ -20,23 +21,23 @@ export default function ExperienceForm({number}:Props) {
       </div>
       <div>
         <label>Your role*</label>
-        <input {...register("role")} type="text" placeholder="Ex: Responsable" className="input" />
-        {errors.role && <p role="alert" className="text-red-500">{errors.role.message}</p>}
+        <input {...register(`experiences.${index}.role`)} type="text" placeholder="Ex: Responsable" className="input" />
+        {errors.experiences?.[index]?.role && <p role="alert" className="text-red-500">{errors.experiences[index]?.role?.message}</p>}
       </div>
       <div>
         <label>Start Date*</label>
-        <input {...register("startDate")} type="date" className="input" />
-        {errors.startDate && <p role="alert" className="text-red-500">{errors.startDate.message}</p>}
+        <input {...register(`experiences.${index}.startDate`)} type="date" className="input" />
+        {errors.experiences?.[index]?.startDate && <p role="alert" className="text-red-500">{errors.experiences[index]?.startDate?.message}</p>}
       </div>
       <div>
         <label>End Date*</label>
-        <input {...register("endDate")} type="date" className="input" />
-        {errors.endDate && <p role="alert" className="text-red-500">{errors.endDate.message}</p>}
+        <input {...register(`experiences.${index}.endDate`)} type="date" className="input" />
+        {errors.experiences?.[index]?.endDate && <p role="alert" className="text-red-500">{errors.experiences[index]?.endDate?.message}</p>}
       </div>
       <div>
         <label>Description*</label>
-        <textarea {...register("description")} className="input" />
-        {errors.description && <p role="alert" className="text-red-500">{errors.description.message}</p>}
+        <textarea {...register(`experiences.${index}.description`)} className="input" />
+        {errors.experiences?.[index]?.description && <p role="alert" className="text-red-500">{errors.experiences[index]?.description?.message}</p>}
       </div>
     </div>
   )

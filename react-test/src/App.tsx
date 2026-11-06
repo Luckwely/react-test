@@ -47,11 +47,6 @@ import { cvSchema, type CvFormType } from "./schema/cv.schema";
 
 export default function App() {
 
-  const [experiences, setExperiences] = useState<string[]>(() => loadIds("experiences"));
-  const [skills, setSkills] = useState<string[]>(() => loadIds("skills"));
-  const [languages, setLanguages] = useState<string[]>(() => loadIds("languages"));
-  const [hobbies, setHobbies] = useState<string[]>(() => loadIds("hobbies"));
-
   const methods = useForm<CvFormType>({
     resolver: zodResolver(cvSchema),
     mode: "onChange",
@@ -64,24 +59,37 @@ export default function App() {
       address: '',
       summary: '',
 
-      educations: [{ school: '', degree: '', startYear: '', endYear: '' }],
+      experiences: [{
+        company: '',
+        role: '',
+        startDate: '',
+        endDate: '',
+        description: '',
+      }],
 
-      company: '',
-      role: '',
-      startDate: '',
-      endDate: '',
-      description: '',
+      educations: [{ 
+        school: '', 
+        degree: '', 
+        startYear: '', 
+        endYear: '' 
+      }],
 
-      hobbies: '',
-      languages: [''],
-      skills: '',
+
+      hobbies: [{name: ''}],
+      languages: [{name: ''}],
+      skills: [{name: ''}],
 
       ...loadDraft(),
       photo: undefined,
     }
 
   });
+
+  const experienceFields = useFieldArray<CvFormType, "experiences">({ control: methods.control, name: "experiences" });
   const educationFields = useFieldArray<CvFormType, "educations">({ control: methods.control, name: "educations" });
+  const skillsFields = useFieldArray<CvFormType, "skills">({ control: methods.control, name: "skills" });
+  const languagesFields = useFieldArray<CvFormType, "languages">({ control: methods.control, name: "languages" });
+  const hobbiesFields = useFieldArray<CvFormType, "hobbies">({ control: methods.control, name: "hobbies" });
   const cvValues = useWatch({
     control: methods.control,
   });
@@ -129,32 +137,32 @@ useEffect(() => {
   try {
     localStorage.setItem(
       "easycv-experiences",
-      JSON.stringify(experiences)
+      JSON.stringify(experienceFields)
     );
 
 
     localStorage.setItem(
       "easycv-skills",
-      JSON.stringify(skills)
+      JSON.stringify(skillsFields)
     );
 
 
     localStorage.setItem(
       "easycv-languages",
-      JSON.stringify(languages)
+      JSON.stringify(languagesFields)
     );
     localStorage.setItem(
       "easycv-hobbies",
-      JSON.stringify(hobbies)
+      JSON.stringify(hobbiesFields)
     );
   } catch (error) {
     console.error("Saving sections failed:", error);
   }
 }, [
-  experiences,
-  skills,
-  languages,
-  hobbies,
+  experienceFields,
+  skillsFields,
+  languagesFields,
+  hobbiesFields,
 ]);
 
   const submit: SubmitHandler<CvFormType> = (data) => {
@@ -179,15 +187,23 @@ useEffect(() => {
               <div className="mb-5">
                 <Title>Experience</Title>
                 <ExperienceForm number={1} />
-                {experiences.map((id, index) => (
-                  <div key={id}>
+                {experienceFields.fields.map((field, index) => (
+                  <div key={field.id}>
                     <ExperienceForm number={index + 2} />
-                    <ButtonRemove onClick={() => setExperiences(old => old.filter(item => item !== id))}>
-                      <FaTrash /> Remove
-                    </ButtonRemove>
+                    {index > 0 && (
+                      <ButtonRemove onClick={() => experienceFields.remove(index)}>
+                        <FaTrash /> Remove
+                      </ButtonRemove>
+                    )}
                   </div>
                 ))}
-                <ButtonAddMore onClick={() => setExperiences(old => [...old, crypto.randomUUID()])}>
+                <ButtonAddMore onClick={() => experienceFields.append({
+                  company: "",
+                  role: "",
+                  startDate: "",
+                  endDate: "",
+                  description: ""
+                })}>
                   <FaPlus /> Add More Experience
                 </ButtonAddMore>
               </div>

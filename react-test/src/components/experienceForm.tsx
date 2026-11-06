@@ -7,14 +7,16 @@ type Props = {
 }
 
 export default function ExperienceForm({number}:Props) {
+  const index = number - 1;
+  register(`experiences.${index}.company`);
   const { register, formState: { errors } } = useFormContext<experienceSchemType>()
   return (
     <div>
       <SubTitle>Item ({number})</SubTitle>
       <div>
         <label>Your company*</label>
-        <input {...register("company")} type="text" placeholder="Ex: Connecta" className="input" />
-        {errors.company && <p role="alert" className="text-red-500">{errors.company.message}</p>}
+        <input {...register(`experiences.${index}.company`)} type="text" placeholder="Ex: Connecta" className="input" />
+        {errors.experiences?.[index]?.company && <p role="alert" className="text-red-500">{errors.experiences[index]?.company?.message}</p>}
       </div>
       <div>
         <label>Your role*</label>

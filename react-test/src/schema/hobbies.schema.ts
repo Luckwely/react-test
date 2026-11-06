@@ -1,9 +1,11 @@
 import z from "zod";
 
 export const hobbiesSchema = z.object({
-    hobbies: z.string()
-                .nonempty("the fullname is required")
-                .min(2, "At least 2 character"),              
-})
+    hobbies: z.array(
+        z.object({
+            name: z.string().min(2, "required"),              
+        })
+    ).min(1),
+});
 
 export type hobbiesSchemType = z.infer<typeof hobbiesSchema>

@@ -1,9 +1,11 @@
 import z from "zod";
 
 export const skillsSchema = z.object({
-    skills: z.string()
-                .nonempty("the fullname is required")
-                .min(2, "At least 2 character"),              
-})
+    skills: z.array(
+        z.object({
+            name: z.string().min(2, "required"),              
+        })
+    ).min(1),
+});
 
 export type skillsSchemType = z.infer<typeof skillsSchema>

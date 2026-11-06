@@ -86,16 +86,18 @@ export default function CvPreview({ cv }: { cv: PreviewCv }) {
 
             <section>
               <h2 className="text-2xl font-extrabold text-gray-900">Experience</h2>
-              <article className="mt-3">
-                <h3 className="text-sm text-gray-900">
-                  <span className="font-semibold uppercase">{cv.role}</span>
-                  <span className="text-gray-600"> – <time>{cv.startDate}</time> to <time>{cv.endDate}</time></span>
-                </h3>
-                <p className="text-sm font-semibold uppercase text-gray-900">{cv.company}</p>
-                <ul className="mt-2 list-disc marker:text-gray-900 pl-5 space-y-1.5 text-sm leading-relaxed text-gray-700">
-                  <li>{cv.description}</li>
-                </ul>
-              </article>
+              {cv.experiences?.map((experience, index) => (
+                <article key={index} className="mt-3">
+                  <h3 className="text-sm text-gray-900">
+                    <span className="font-semibold uppercase">{experience?.role}</span>
+                    <span className="text-gray-600"> – <time>{experience?.startDate}</time> to <time>{experience?.endDate}</time></span>
+                  </h3>
+                  <p className="text-sm font-semibold uppercase text-gray-900">{experience?.company}</p>
+                  <ul className="mt-2 list-disc marker:text-gray-900 pl-5 space-y-1.5 text-sm leading-relaxed text-gray-700">
+                    <li>{experience?.description}</li>
+                  </ul>
+                </article>
+              ))}
             </section>
 
             <section>
@@ -112,7 +114,9 @@ export default function CvPreview({ cv }: { cv: PreviewCv }) {
             <section>
               <h2 className="text-2xl font-extrabold text-gray-900">Skills</h2>
               <ul className="mt-3 list-disc marker:text-gray-900 pl-5 space-y-1.5 text-sm leading-relaxed text-gray-700">
-                <li>{cv.skills}</li>
+                {cv.skills?.map((skill, index) => (
+                  <li key={index}>{skill?.name}</li>
+                ))}
               </ul>
             </section>
 

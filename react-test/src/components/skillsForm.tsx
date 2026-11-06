@@ -1,19 +1,36 @@
 import { useFormContext } from "react-hook-form"
 import SubTitle from "./ui/subTitle"
-import type { skillsSchemType } from "../schema/skills.schema"
+import type { CvFormType } from "../schema/cv.schema"
 
 type Props = {
   number: number
 }
 
-export default function SkillsForm({number}: Props) {
-  const { register, formState: { errors } } = useFormContext<skillsSchemType>()
+export default function SkillsForm({ number }: Props) {
+  const index = number - 1;
+
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<CvFormType>();
+
   return (
     <div>
       <SubTitle>Item {number}</SubTitle>
       <div>
-        <input {...register("skills")} type="text" placeholder="Ex: photoshop, excel" className="input" />
-        {errors.skills && <p role="alert" className="text-red-500">{errors.skills.message}</p>}
+
+        <input
+          {...register(`skills.${index}.name`)}
+          type="text"
+          className="input"
+        />
+
+        {errors.skills?.[index]?.name && (
+          <p className="text-red-500">
+            {errors.skills[index]?.name?.message}
+          </p>
+        )}
+
       </div>
     </div>
   )

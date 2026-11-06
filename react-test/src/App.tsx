@@ -8,7 +8,7 @@ import ButtonAddMore from "./components/ui/buttonAddMore";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import Language from "./components/language";
 import Hobbies from "./components/hobbies";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import ButtonRemove from "./components/ui/buttonRemove";
 import Title from "./components/ui/title";
 import { useForm, FormProvider, useWatch, useFieldArray, type SubmitHandler } from "react-hook-form";
@@ -31,17 +31,6 @@ function loadDraft(): Partial<CvFormType> {
     return draft;
   } catch {
     return {};
-  }
-}
-function loadIds(section: string): string[] {
-  try {
-    const saved = localStorage.getItem(
-      `easycv-${section}`
-    );
-    const ids = saved ? JSON.parse(saved) : [];
-    return Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : [];
-  } catch {
-    return [];
   }
 }
 

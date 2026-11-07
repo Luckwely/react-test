@@ -4,40 +4,72 @@
     @apply w-full px-3 py-1 border border-gray-200 rounded-full outline-none shadow-xs
 }
 
+
 @media print {
-    @page {
-        size: A4;
-        margin: 12mm;
-    }
+  @page {
+    size: A4;
+    margin: 0;
+  }
 
-    .no-print {
-        display: none !important;
-    }
+  .no-print {
+    display: none !important;
+  }
 
-    body {
-        margin: 0;
-        background: white;
-    }
+  html,
+  body,
+  #root {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
 
-    main {
-        display: block !important;
-        margin: 0 !important;
-    }
+  main:not(.cv-preview-document) {
+    display: block !important;
+    margin: 0 !important;
+  }
 
-    .cv-preview-section {
-        display: block !important;
-        width: 100% !important;
-        border: none !important;
-        padding: 0 !important;
-        box-shadow: none;
-    }
+  .cv-preview-section {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 
-    .cv-preview-document {
-        width: 100% !important;
-        max-width: none !important;
-        box-shadow: none !important;
-        background: white;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-    }
+  .cv-preview-document {
+    box-sizing: border-box !important;
+    width: 210mm !important;
+    max-width: 210mm !important;
+    margin: 0 !important;
+    padding-top: 8mm !important;
+    padding-bottom: 8mm !important;
+    box-shadow: none !important;
+    background: white !important;
+
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .cv-header {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .cv-columns {
+    display: grid !important;
+    grid-template-columns:
+      minmax(0, 1fr) minmax(0, 2fr) !important;
+  }
+
+  .cv-columns aside {
+    grid-column: 1 !important;
+  }
+
+  .cv-columns .cv-main-content {
+    grid-column: 2 !important;
+  }
+
+  .cv-preview-document article {
+    break-inside: avoid;
+  }
 }

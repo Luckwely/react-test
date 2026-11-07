@@ -298,7 +298,7 @@ export default function App() {
           </FormProvider>
         </section>
 
-        <section className="flex-1 border border-gray-100">
+        <section className="flex-1 cv-preview-section border border-gray-100">
           <CvPreview cv={cvValues} />
         </section>
       </main>

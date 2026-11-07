@@ -13,7 +13,7 @@ export default function Language({number}: Props) {
         <div>
             <SubTitle>Item {number}</SubTitle>
             <div>
-                <input {...register(`languages.${index}`)} type="text" placeholder="Ex: French" className="input" />
+                <input {...register(`languages.${index}.name`)} type="text" placeholder="Ex: French" className="input" />
                 {errors.languages?.[index] && <p role="alert" className="text-red-500">{errors.languages[index]?.message}</p>}
             </div>
         </div>

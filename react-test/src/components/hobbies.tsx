@@ -7,12 +7,13 @@ type Props = {
 }
 
 export default function Hobbies({number}: Props) {
+    const index = number - 1;
     const { register, formState: { errors } } = useFormContext<hobbiesSchemType>()
     return (
         <div>
             <SubTitle>Item {number}</SubTitle>
             <div>
-                <input {...register("hobbies")} type="text" placeholder="Ex: Playing guitar" className="input" />
+                <input {...register(`hobbies.${index}.name`)} type="text" placeholder="Ex: Playing guitar" className="input" />
                 {errors.hobbies && <p role="alert" className="text-red-500">{errors.hobbies.message}</p>}
             </div>
         </div>

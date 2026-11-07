@@ -174,7 +174,6 @@ export default function App() {
                 <PersonalInfoForm />
               </div>
 
-
               <div className="mb-5">
                 <Title>Experience</Title>
 
@@ -207,7 +206,6 @@ export default function App() {
                 </ButtonAddMore>
               </div>
 
-
               <div className="mb-5">
                 <Title>Education</Title>
                 {educationFields.fields.map((field, index) => (
@@ -226,7 +224,6 @@ export default function App() {
                   <FaPlus /> Add More Education
                 </ButtonAddMore>
               </div>
-
 
               <div className="mb-5">
                 <Title>Skill</Title>
@@ -251,7 +248,6 @@ export default function App() {
                   <FaPlus /> Add More Skill
                 </ButtonAddMore>
               </div>
-
 
               <div className="mb-5">
                 <Title>Language</Title>
@@ -298,10 +294,6 @@ export default function App() {
                 </ButtonAddMore>
               </div>
 
-              <button type="button" onClick={() => {
-                console.log('current cv values:', methods.getValues());
-              }}>Check form values</button>
-              <button type="submit">ok</button>
             </form>
           </FormProvider>
         </section>

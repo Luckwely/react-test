@@ -28,9 +28,9 @@ export default function Header() {
           </div>
 
           <div className="">
-            <button type="button" onClick={()=>{window.print()}} className="no-print bg-green-600 text-white px-3 py-2 m-4 rounded-2xl flex items-center gap-1">
-           <FaSave /> Print / Save as Pdf
-          </button>
+            <button type="button" onClick={() => { window.print() }} className="no-print bg-green-600 text-white px-3 py-2 m-4 rounded-2xl flex items-center gap-1">
+              <FaSave /> Print / Save as Pdf
+            </button>
           </div>
         </div>
       </nav>

@@ -9,23 +9,29 @@
         size: A4;
         margin: 12mm;
     }
+
     .no-print {
         display: none !important;
     }
+
     body {
         margin: 0;
         background: white;
     }
+
     main {
         display: block !important;
         margin: 0 !important;
     }
+
     .cv-preview-section {
         display: block !important;
         width: 100% !important;
-        border:  none !important;
+        border: none !important;
         padding: 0 !important;
+        box-shadow: none;
     }
+
     .cv-preview-document {
         width: 100% !important;
         max-width: none !important;

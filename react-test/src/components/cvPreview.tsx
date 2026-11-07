@@ -27,8 +27,8 @@ export default function CvPreview({ cv }: { cv: DeepPartial<CvFormType> }) {
   }, [cv.photo])
 
   return (
-    <div>
-      <main className="page mx-auto my-0 sm:my-8 w-full max-w-205 bg-white shadow-xl overflow-hidden pb-10">
+    <div className="cv-preview-document">
+      <main className="page cv-preview-section mx-auto my-0 sm:my-8 w-full max-w-205 bg-white shadow-xl overflow-hidden pb-10">
 
         <header className="flex flex-col sm:flex-row items-center gap-4 sm:gap-0 px-6 pt-6 sm:px-8 sm:pt-8">
           <label className="relative z-10 shrink-0 w-36 h-36 sm:w-40 sm:h-40 rounded-full bg-gray-100 border-4 border-white overflow-hidden sm:-mr-6 cursor-pointer group">
